@@ -9,6 +9,13 @@
 <body>
     <div class="container">
         <p>Sic.</p>
+        <p>
+            {{ if .username }}
+                Logged in as {{ .username }} <a href="{{ .logoutURL }}">Logout</a>
+            {{ else }}
+                <a href="{{ .loginURL }}">Login</a>
+            {{ end }}
+        </p>
         <p>{{- .time -}}</p>
     </div>
 </body>

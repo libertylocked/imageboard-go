@@ -11,7 +11,10 @@ import (
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
 	tmplData := map[string]string{
-		"time": time.Now().Format(time.UnixDate),
+		"time":      time.Now().Format(time.UnixDate),
+		"username":  getUserEmail(r),
+		"loginURL":  getLoginURL(r, "/"),
+		"logoutURL": getLogoutURL(r, ""),
 	}
 	renderTemplate(w, "index.html", tmplData)
 }

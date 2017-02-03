@@ -13,6 +13,7 @@ func init() {
 func getHandlers() *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/", handleIndex).Methods("GET")
+	router.HandleFunc("/user", handleUser)
 
 	return router
 }
