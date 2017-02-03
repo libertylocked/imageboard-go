@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"appengine"
-	"appengine/user"
 )
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
@@ -20,17 +17,31 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleUser(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	u := user.Current(c)
-	if u == nil {
-		url, err := user.LoginURL(c, r.URL.String())
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Location", url)
-		w.WriteHeader(http.StatusFound)
+	email := getUserEmail(r)
+	if email == "" {
+		redirToLogin(w, r)
 		return
 	}
-	fmt.Fprintf(w, "Hello, %v!", u)
+	fmt.Fprintf(w, "Hello, %v!", email)
+}
+
+func handleEmployeeUpdate(w http.ResponseWriter, r *http.Request) {
+	email := getUserEmail(r)
+	if email == "" {
+		redirToLogin(w, r)
+		return
+	}
+	name := r.FormValue("name")
+	bio := r.FormValue("bio")
+	updateEmployee(getContext(r), name, bio, email)
+}
+
+func handleEmployeeGet(w http.ResponseWriter, r *http.Request) {
+	employeeEmail := r.FormValue("email")
+	employee, err := getEmployee(getContext(r), employeeEmail)
+	if err != nil {
+		fmt.Fprintf(w, "error %v", err)
+	} else {
+		fmt.Fprintf(w, "%v", employee)
+	}
 }
