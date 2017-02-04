@@ -24,15 +24,21 @@ func handleEmployeeView(w http.ResponseWriter, r *http.Request) {
 	employee, err := getEmployee(getContext(r), employeeEmail)
 	if err != nil {
 		fmt.Fprintf(w, "error getting employee info. %v", err)
-	} else {
-		tmplData := map[string]string{
-			"name":        employee.Name,
-			"bio":         employee.Bio,
-			"email":       employee.Email,
-			"lastUpdated": employee.LastUpdated.Format(time.UnixDate),
-		}
-		renderTemplate(w, "employee_view.html", tmplData)
+		return
 	}
+	images, err := getImageRecordsByEmail(getContext(r), employeeEmail)
+	if err != nil {
+		fmt.Fprintf(w, "error getting images. %v", err)
+		return
+	}
+	tmplData := map[string]interface{}{
+		"name":        employee.Name,
+		"bio":         employee.Bio,
+		"email":       employee.Email,
+		"lastUpdated": employee.LastUpdated.Format(time.UnixDate),
+		"images":      images,
+	}
+	renderTemplate(w, "employee_view.html", tmplData)
 }
 
 func handleEmployeeEdit(w http.ResponseWriter, r *http.Request) {

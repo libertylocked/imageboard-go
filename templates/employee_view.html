@@ -17,5 +17,12 @@
         <p>{{ .email }}</p>
         <h2>Last Updated</h2>
         <p>{{ .lastUpdated }}</p>
+
+        <h2>Images Uploaded</h2>
+        <ul>
+        {{ range $img := .images }}
+            <li><a href="/imageview?blobkey={{ $img.BlobKey }}">{{ $img.Name }}</a></li>
+        {{ end }}
+        <ul>
     </div>
 </body>

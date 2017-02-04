@@ -72,3 +72,15 @@ func getImageRecord(ctx appengine.Context, blobKey string) (ImageRecord, error) 
 	}
 	return img, err
 }
+
+func getImageRecordsByEmail(ctx appengine.Context, email string) ([]ImageRecord, error) {
+	q := datastore.NewQuery("ImageRecord").
+		Filter("Email = ", email).
+		Order("-TimeUploaded")
+	var results []ImageRecord
+	_, err := q.GetAll(ctx, &results)
+	if err != nil {
+		log.Println(err)
+	}
+	return results, err
+}

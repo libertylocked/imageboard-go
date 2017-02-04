@@ -13,6 +13,7 @@
         {{ if .username }}
         <p>Logged in as {{ .username }} <a href="{{ .logoutURL }}">Logout</a></p>
         <p><a href="/employeeedit">Edit my info</a></p>
+        <p><a href="/imageupload">Upload an image</a></p>
         {{ else }}
         <p><a href="{{ .loginURL }}">Login</a></p>
         {{ end }}
