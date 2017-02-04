@@ -42,3 +42,23 @@ func getEmployee(ctx appengine.Context, email string) (Employee, error) {
 	}
 	return employee, err
 }
+
+func getAllEmployees(ctx appengine.Context) []Employee {
+	employees := []Employee{}
+	q := datastore.NewQuery("Employee")
+	t := q.Run(ctx)
+	for {
+		var e Employee
+		_, err := t.Next(&e)
+		if err == datastore.Done {
+			break // done
+		}
+		if err != nil {
+			log.Printf("error fetching next person %v", err)
+			break
+		}
+		// push to arr
+		employees = append(employees, e)
+	}
+	return employees
+}

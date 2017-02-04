@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Employee View</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>View User Info</h1>
+        <h2>Name</h2>
+        <p>{{ .name }}</p>
+        <h2>Bio</h2>
+        <p>{{ .bio }}</p>
+        <h2>Email</h2>
+        <p>{{ .email }}</p>
+        <h2>Last Updated</h2>
+        <p>{{ .lastUpdated }}</p>
+    </div>
+</body>

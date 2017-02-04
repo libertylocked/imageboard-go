@@ -8,14 +8,20 @@
 </head>
 <body>
     <div class="container">
+        <h1>Title</h1>
         <p>Sic.</p>
-        <p>
-            {{ if .username }}
-                Logged in as {{ .username }} <a href="{{ .logoutURL }}">Logout</a>
-            {{ else }}
-                <a href="{{ .loginURL }}">Login</a>
-            {{ end }}
-        </p>
+        {{ if .username }}
+        <p>Logged in as {{ .username }} <a href="{{ .logoutURL }}">Logout</a></p>
+        <p><a href="/employeeedit">Edit my info</a></p>
+        {{ else }}
+        <p><a href="{{ .loginURL }}">Login</a></p>
+        {{ end }}
         <p>{{- .time -}}</p>
+    </div>
+    <div class="container">
+        <h2>datastore</h2>
+        {{ range $employee := .employees }}
+            <a href="/employeeview?email={{ $employee.Email }}">{{ $employee.Name }}</a>
+        {{ end }}
     </div>
 </body>
