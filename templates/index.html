@@ -19,9 +19,9 @@
         <p>{{- .time -}}</p>
     </div>
     <div class="container">
-        <h2>datastore</h2>
+        <h2>Employee records</h2>
         {{ range $employee := .employees }}
-            <a href="/employeeview?email={{ $employee.Email }}">{{ $employee.Name }}</a>
+            <a href="/employeeview?email={{ $employee.Email }}">{{ $employee.Name }}</a> ({{ $employee.Email }})<br>
         {{ end }}
     </div>
 </body>

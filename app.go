@@ -17,5 +17,10 @@ func getHandlers() *mux.Router {
 	router.HandleFunc("/employeeedit", handleEmployeeEdit).Methods("GET")
 	router.HandleFunc("/employeeupdate", handleEmployeeUpdate).Methods("POST")
 
+	router.HandleFunc("/imageupload", handleImageUpload).Methods("GET")
+	router.HandleFunc("/imageupload_complete", handleImageUploadComplete).Methods("POST")
+	router.HandleFunc("/imageview", handleImageView).Methods("GET")
+	router.HandleFunc("/serveimage", handleImageServe).Methods("GET")
+
 	return router
 }
