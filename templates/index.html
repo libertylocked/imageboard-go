@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Title</h1>
+        <h1>Home</h1>
         <p>Sic.</p>
         {{ if .username }}
         <p>Logged in as {{ .username }} <a href="{{ .logoutURL }}">Logout</a></p>
@@ -20,7 +20,7 @@
         <p>{{- .time -}}</p>
     </div>
     <div class="container">
-        <h2>Employee records</h2>
+        <h2>Registered Users</h2>
         {{ range $employee := .employees }}
             <a href="/employeeview?email={{ $employee.Email }}">{{ $employee.Name }}</a> ({{ $employee.Email }})<br>
         {{ end }}
