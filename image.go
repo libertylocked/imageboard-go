@@ -50,6 +50,11 @@ func deleteImageBlob(ctx appengine.Context, blobkey string) {
 	blobstore.Delete(ctx, appengine.BlobKey(blobkey))
 }
 
+func deleteImageRecord(ctx appengine.Context, blobkey string) {
+	key := datastore.NewKey(ctx, "ImageRecord", blobkey, 0, nil)
+	datastore.Delete(ctx, key)
+}
+
 func updateImageRecord(ctx appengine.Context, name, blobkey, email string) {
 	img := &ImageRecord{
 		Name:         name,

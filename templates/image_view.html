@@ -17,4 +17,9 @@
         <h2>Time Uploaded</h2>
         <p>{{ .timeUploaded }}</p>
     </div>
+    <div class="container">
+        {{ if eq .userEmail .email }}
+        <a href="/imagedelete?blobkey={{ .blobKey }}">Delete</a>
+        {{ end }}
+    </div>
 </body>

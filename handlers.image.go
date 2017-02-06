@@ -25,6 +25,7 @@ func handleImageUploadComplete(w http.ResponseWriter, r *http.Request) {
 		if name == "" {
 			// delete the blob because we don't allow non-named images
 			deleteImageBlob(ctx, blobKey)
+			io.WriteString(w, "Image must have a name!")
 			return
 		}
 		updateImageRecord(ctx, name, blobKey, getUserEmail(r))
@@ -34,6 +35,7 @@ func handleImageUploadComplete(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleImageView(w http.ResponseWriter, r *http.Request) {
+	userEmail := getUserEmail(r)
 	blobKey := r.FormValue("blobkey")
 	if blobKey == "" {
 		return
@@ -48,6 +50,7 @@ func handleImageView(w http.ResponseWriter, r *http.Request) {
 		"blobKey":      img.BlobKey,
 		"email":        img.Email,
 		"timeUploaded": img.TimeUploaded.Format(time.UnixDate),
+		"userEmail":    userEmail,
 	}
 	renderTemplate(w, "image_view.html", tmplData)
 }
@@ -57,4 +60,29 @@ func handleImageServe(w http.ResponseWriter, r *http.Request) {
 	if blobKey != "" {
 		serveImageByKey(w, blobKey)
 	}
+}
+
+func handleImageDelete(w http.ResponseWriter, r *http.Request) {
+	email := getUserEmail(r)
+	blobkey := r.FormValue("blobkey")
+	ctx := getContext(r)
+
+	record, err := getImageRecord(ctx, blobkey)
+	if err != nil {
+		io.WriteString(w, "Error getting blob")
+		log.Println(err)
+		return
+	}
+
+	if record.Email != email {
+		io.WriteString(w, "You can only delete images uploaded by you")
+		return
+	}
+
+	// delete the blob
+	deleteImageBlob(ctx, blobkey)
+	// delete the image record
+	deleteImageRecord(ctx, blobkey)
+
+	io.WriteString(w, "image deleted")
 }

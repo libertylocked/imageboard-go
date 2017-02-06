@@ -21,6 +21,7 @@ func getHandlers() *mux.Router {
 	router.HandleFunc("/imageupload_complete", handleImageUploadComplete).Methods("POST")
 	router.HandleFunc("/imageview", handleImageView).Methods("GET")
 	router.HandleFunc("/serveimage", handleImageServe).Methods("GET")
+	router.HandleFunc("/imagedelete", handleImageDelete).Methods("GET")
 
 	return router
 }
