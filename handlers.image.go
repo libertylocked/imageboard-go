@@ -22,6 +22,11 @@ func handleImageUploadComplete(w http.ResponseWriter, r *http.Request) {
 	name := otherValues.Get("name")
 	log.Println("Storing", name, " blob key:", blobKey)
 	if blobKey != "" {
+		if name == "" {
+			// delete the blob because we don't allow non-named images
+			deleteImageBlob(ctx, blobKey)
+			return
+		}
 		updateImageRecord(ctx, name, blobKey, getUserEmail(r))
 		http.Redirect(w, r, "/imageview?blobkey="+blobKey, http.StatusFound)
 	}

@@ -46,6 +46,10 @@ func getImageParseUploadKey(ctx appengine.Context, r *http.Request) (string, url
 	return string(file[0].BlobKey), otherVals
 }
 
+func deleteImageBlob(ctx appengine.Context, blobkey string) {
+	blobstore.Delete(ctx, appengine.BlobKey(blobkey))
+}
+
 func updateImageRecord(ctx appengine.Context, name, blobkey, email string) {
 	img := &ImageRecord{
 		Name:         name,
